@@ -2,7 +2,7 @@ ASPARAMS = --32
 GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore
 LDPARAMS = -melf_i386
 
-objects = loader.o kernel.o
+objects = loader.o kernel.o gdt.o
 
 %.o: %.cpp
 	g++ $(GPPPARAMS) -o $@ -c $<
@@ -31,5 +31,5 @@ mykernel.iso: mykernel.bin
 	rm -rf iso
 
 run: mykernel.iso
-	(killall virtualbox) || true
+	(killall virtualboxvm) || true
 	virtualboxvm --startvm "NeryOS" &
