@@ -7,10 +7,8 @@ void printf(char* str){
         VideoMemory[i] = (VideoMemory[i] & 0xFF00) | str[i];
 }
 
-
-
 extern "C" void kernelMain(const void* multiboot_structure, uint32_t /*magicnumber*/){
-    printf("Bem vindo ao NeryOS\n");
+    printf("Bem vindo ao NeryOS");
     GlobalDescriptorTable gdt;
     while (1);
 }
