@@ -2,7 +2,11 @@ ASPARAMS = --32
 GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore
 LDPARAMS = -melf_i386
 
-objects = loader.o kernel.o gdt.o port.o
+objects =  loader.o gdt.o port.o interruptsubs.o interrupts.o kernel.o 
+
+run: mykernel.iso
+	(killall virtualboxvm) || true
+	virtualboxvm --startvm "NeryOS" &
 
 %.o: %.cpp
 	g++ $(GPPPARAMS) -o $@ -c $<
@@ -12,9 +16,6 @@ objects = loader.o kernel.o gdt.o port.o
 
 mykernel.bin: linker.ld $(objects)
 	ld $(LDPARAMS) -T $< -o $@ $(objects)
-
-install: mykernel.bin
-	sudo cp $< /boot/mykernel.bin
 
 mykernel.iso: mykernel.bin
 	mkdir iso
@@ -30,7 +31,9 @@ mykernel.iso: mykernel.bin
 	grub-mkrescue --output=$@ iso
 	rm -rf iso
 
-run: mykernel.iso
-	(killall virtualboxvm) || true
-	virtualboxvm --startvm "NeryOS" &
-	rm *.o *.bin *.iso
+install: mykernel.bin
+	sudo cp $< /boot/mykernel.bin
+	
+.PHONY: clean
+clean:
+	rm -f $(objects) mykernel.bin mykernel.iso

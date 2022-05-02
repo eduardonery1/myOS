@@ -1,4 +1,4 @@
-#ifndef uint16_t, uint8_t, uint32_t
+#ifndef __TYPES_H
 #include "types.h"
 #endif
 
@@ -7,7 +7,7 @@
 
 class GlobalDescriptorTable{
     public: 
-        class SegmentSelector{
+        class SegmentDescriptor{
             private:
                 uint16_t limit_lo;
                 uint16_t base_lo;
@@ -15,15 +15,15 @@ class GlobalDescriptorTable{
                 uint8_t flags_limit_hi;
                 uint8_t base_vhi;
             public:
-                SegmentSelector(uint32_t base, uint32_t limit, uint8_t type);
+                SegmentDescriptor(uint32_t base, uint32_t limit, uint8_t type);
                 uint32_t Base();
                 uint32_t Limit();
         } __attribute__((packed));
 
-        SegmentSelector nullSegmentSelector;
-        SegmentSelector unusedSegmentSelector;
-        SegmentSelector codeSegmentSelector;
-        SegmentSelector dataSegmentSelector;
+        SegmentDescriptor nullSegmentSelector;
+        SegmentDescriptor unusedSegmentSelector;
+        SegmentDescriptor codeSegmentSelector;
+        SegmentDescriptor dataSegmentSelector;
 
         GlobalDescriptorTable();
         ~GlobalDescriptorTable();

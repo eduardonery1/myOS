@@ -1,5 +1,7 @@
 #include "port.h"
 
+void printf(const char*);
+
 Port::Port(uint16_t portnumber){
     this->portnumber = portnumber;
 }   
@@ -17,6 +19,7 @@ void Port8Bit::Write(uint8_t data){
 }
 
 uint8_t Port8Bit::Read(){
+    printf("Li antes de bugar\n");
     uint8_t result;
     __asm__ volatile("inb %1, %0" : "=a" (result): "Nd" (portnumber));
     return result;
@@ -29,6 +32,7 @@ Port8Bit(portnumber){}
 Port8BitSlow::~Port8BitSlow(){}
 
 void Port8BitSlow::Write(uint8_t data){
+    printf("Escrevi antes de bugar\n");
     __asm__ volatile("outb %0, %1\njmp 1f\n1: jmp 1f\n1:": : "a" (data), "Nd" (portnumber));
 }
 
