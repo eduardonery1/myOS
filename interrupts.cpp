@@ -145,19 +145,20 @@ uint32_t InterruptManager::DoHandleInterrupt(uint8_t interrupt, uint32_t esp)
     if (handlers[interrupt] != 0){
         esp = handlers[interrupt]->HandleInterrupt(esp);
     }
-    else if (interrupt != TIMER_INTERRUPT){
-        char* foo = "UNHANDLED INTERRUPT 0x00";
-        char* hex = "013456789ABCDEF";
+    else if (interrupt != 0x20){
+        char* foo = "UNHANDLED INTERRUPT 0x00\n";
+        char* hex = "0123456789ABCDEF";
         foo[22] = hex[(interrupt >> 4) & 0x0F];
         foo[23] = hex[interrupt & 0x0F];
         printf(foo);
     }
     
-    if ((ActiveInterruptManager->hardwareInterruptOffset <= interrupt) 
-        & (interrupt < ActiveInterruptManager->hardwareInterruptOffset + 0x10)){
-        picMasterCommandPort.Write(ActiveInterruptManager->HardwareInterruptOffset());
-        picSlaveCommandPort.Write(0x11);
+    if ((0x20 <= interrupt) & (interrupt < 0x30)){
+        picMasterCommandPort.Write(0x20);
+        if (0x28 <= interrupt)
+            picSlaveCommandPort.Write(0x20);
     }
+
     return esp;
 }
 

@@ -109,9 +109,9 @@
             ~InterruptHandler();
 
         public:
-            uint32_t HandleInterrupt(uint32_t esp);
+            virtual uint32_t HandleInterrupt(uint32_t esp);
     };
 #endif
 
-#define TIMER_INTERRUPT 0x20
-#define KEYBOARD_INTERRUPT 0x31
+//#define TIMER_INTERRUPT 0x20
+//#define KEYBOARD_INTERRUPT 0x31
