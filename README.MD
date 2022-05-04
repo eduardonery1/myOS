@@ -41,7 +41,8 @@ Create a VM in Virtual Box called 'NeryOS' or change the name in the Makefile.
 make clean
 make run
 ```
-This should open a vm with the OS. Currently it only detects keyboard strokes, prints "interrupt" and breaks =)
+This should open a vm with the OS. Currently it only detects keyboard strokes and printts "KEYBOARD {hex}".
+The Keyboard Driver is working and reading the data.
 
 
 
